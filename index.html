@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>4入力マルチプレクサ 回路図と解説（簡潔版）</title>
+<style>
+  body { 
+    background-color: #f7f9fc; 
+    padding: 30px; 
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 850px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  h1 {
+    text-align: center;
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 10px;
+    color: #2c3e50;
+    font-size: 24px;
+  }
+  h2 {
+    color: #2980b9;
+    border-left: 5px solid #3498db;
+    padding-left: 10px;
+    margin-top: 30px;
+    font-size: 18px;
+  }
+  .canvas {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  .wire { stroke: #000; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .gate { stroke: #000; stroke-width: 1.5; fill: #fff; stroke-linejoin: round; }
+  .dot { fill: #000; }
+  .text-label { font-family: "Times New Roman", Times, serif; font-size: 20px; font-style: italic; fill: #000; }
+  .text-sub { font-size: 14px; }
+  .explanation p {
+    margin-bottom: 1em;
+  }
+  .explanation ul {
+    margin-bottom: 1.5em;
+  }
+  .explanation li {
+    margin-bottom: 0.5em;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>4入力マルチプレクサ 論理構成図</h1>
+
+  <div class="canvas">
+    <svg width="750" height="550" viewBox="0 0 750 550" xmlns="http://www.w3.org/2000/svg">
+      <!-- 制御入力ラベル -->
+      <text x="190" y="40" class="text-label">ctl<tspan class="text-sub" dy="5">0</tspan></text>
+      <text x="290" y="40" class="text-label">ctl<tspan class="text-sub" dy="5">1</tspan></text>
+
+      <!-- 制御入力のメイン縦線 -->
+      <line x1="200" y1="50" x2="200" y2="520" class="wire" />
+      <line x1="300" y1="50" x2="300" y2="520" class="wire" />
+
+      <!-- ctl0 のNOT分岐 -->
+      <circle cx="200" cy="70" r="4" class="dot" />
+      <line x1="200" y1="70" x2="240" y2="70" class="wire" />
+      <polygon points="230,70 250,70 240,90" class="gate" />
+      <circle cx="240" cy="94" r="4" class="gate" />
+      <line x1="240" y1="98" x2="240" y2="520" class="wire" />
+
+      <!-- ctl1 のNOT分岐 -->
+      <circle cx="300" cy="70" r="4" class="dot" />
+      <line x1="300" y1="70" x2="340" y2="70" class="wire" />
+      <polygon points="330,70 350,70 340,90" class="gate" />
+      <circle cx="340" cy="94" r="4" class="gate" />
+      <line x1="340" y1="98" x2="340" y2="520" class="wire" />
+
+      <!-- データ入力ラベル -->
+      <text x="50" y="155" class="text-label">i<tspan class="text-sub" dy="5">0</tspan></text>
+      <text x="50" y="255" class="text-label">i<tspan class="text-sub" dy="5">1</tspan></text>
+      <text x="50" y="355" class="text-label">i<tspan class="text-sub" dy="5">2</tspan></text>
+      <text x="50" y="455" class="text-label">i<tspan class="text-sub" dy="5">3</tspan></text>
+
+      <!-- 入力横線とANDゲートへの結線 -->
+      <!-- AND0 -->
+      <line x1="70" y1="150" x2="450" y2="150" class="wire" />
+      <line x1="240" y1="135" x2="450" y2="135" class="wire" />
+      <circle cx="240" cy="135" r="4" class="dot" />
+      <line x1="340" y1="165" x2="450" y2="165" class="wire" />
+      <circle cx="340" cy="165" r="4" class="dot" />
+      <path d="M 450,125 L 475,125 A 25,25 0 0,1 475,175 L 450,175 Z" class="gate" />
+
+      <!-- AND1 -->
+      <line x1="70" y1="250" x2="450" y2="250" class="wire" />
+      <line x1="240" y1="235" x2="450" y2="235" class="wire" />
+      <circle cx="240" cy="235" r="4" class="dot" />
+      <line x1="300" y1="265" x2="450" y2="265" class="wire" />
+      <circle cx="300" cy="265" r="4" class="dot" />
+      <path d="M 450,225 L 475,225 A 25,25 0 0,1 475,275 L 450,275 Z" class="gate" />
+
+      <!-- AND2 -->
+      <line x1="70" y1="350" x2="450" y2="350" class="wire" />
+      <line x1="200" y1="335" x2="450" y2="335" class="wire" />
+      <circle cx="200" cy="335" r="4" class="dot" />
+      <line x1="340" y1="365" x2="450" y2="365" class="wire" />
+      <circle cx="340" cy="365" r="4" class="dot" />
+      <path d="M 450,325 L 475,325 A 25,25 0 0,1 475,375 L 450,375 Z" class="gate" />
+
+      <!-- AND3 -->
+      <line x1="70" y1="450" x2="450" y2="450" class="wire" />
+      <line x1="200" y1="435" x2="450" y2="435" class="wire" />
+      <circle cx="200" cy="435" r="4" class="dot" />
+      <line x1="300" y1="465" x2="450" y2="465" class="wire" />
+      <circle cx="300" cy="465" r="4" class="dot" />
+      <path d="M 450,425 L 475,425 A 25,25 0 0,1 475,475 L 450,475 Z" class="gate" />
+
+      <!-- ANDからORへの結線 -->
+      <line x1="500" y1="150" x2="530" y2="150" class="wire" />
+      <line x1="530" y1="150" x2="530" y2="265" class="wire" />
+      <line x1="530" y1="265" x2="608" y2="265" class="wire" />
+
+      <line x1="500" y1="250" x2="560" y2="250" class="wire" />
+      <line x1="560" y1="250" x2="560" y2="285" class="wire" />
+      <line x1="560" y1="285" x2="611" y2="285" class="wire" />
+
+      <line x1="500" y1="350" x2="560" y2="350" class="wire" />
+      <line x1="560" y1="350" x2="560" y2="315" class="wire" />
+      <line x1="560" y1="315" x2="611" y2="315" class="wire" />
+
+      <line x1="500" y1="450" x2="530" y2="450" class="wire" />
+      <line x1="530" y1="450" x2="530" y2="335" class="wire" />
+      <line x1="530" y1="335" x2="608" y2="335" class="wire" />
+
+      <!-- OR Gate -->
+      <path d="M 600,240 Q 630,240 670,300 Q 630,360 600,360 Q 625,300 600,240 Z" class="gate" />
+
+      <!-- 最終出力 -->
+      <line x1="670" y1="300" x2="720" y2="300" class="wire" />
+      <text x="730" y="305" class="text-label">s</text>
+    </svg>
+  </div>
+
+  <div class="explanation">
+    <h2>1. 動作の概要</h2>
+    <p>4つの入力（i0〜i3）から1つを選び、出力 s に繋ぐ回路です。2ビットの制御信号（ctl0, ctl1）の組み合わせで選択を行います。</p>
+
+    <h2>2. 回路の仕組み</h2>
+    <ul>
+      <li><strong>NOTゲート：</strong>制御信号を反転させます。これにより、信号の「0」と「1」両方の状態を作ります。</li>
+      <li><strong>ANDゲート：</strong>各ゲートは特定の制御信号の組み合わせの時だけ有効になります。条件を満たした1つの入力データだけが通過します。</li>
+      <li><strong>ORゲート：</strong>4つのANDゲートの出力を1つにまとめます。有効になるANDゲートは常に1つなので、選ばれたデータがそのまま出力 s となります。</li>
+    </ul>
+
+    <h2>3. 制御信号と出力の対応</h2>
+    <ul>
+      <li>ctl0=0, ctl1=0 のとき：一番上のANDが有効になり、i0 を出力する。</li>
+      <li>ctl0=0, ctl1=1 のとき：2番目のANDが有効になり、i1 を出力する。</li>
+      <li>ctl0=1, ctl1=0 のとき：3番目のANDが有効になり、i2 を出力する。</li>
+      <li>ctl0=1, ctl1=1 のとき：一番下のANDが有効になり、i3 を出力する。</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
